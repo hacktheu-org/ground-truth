@@ -44,7 +44,7 @@ class Config implements IConfig.Main {
 		cookieSecureOnly: false,
 		mongoURL: "mongodb://localhost/auth",
 		passwordResetExpiration: 1000 * 60 * 60, // 1 hour
-		defaultTimezone: "America/New_York",
+		defaultTimezone: "America/Denver",
 		name: "HackGT",
 		adminDomains: ["hack.gt"],
 		admins: [],
