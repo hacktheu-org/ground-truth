@@ -16,23 +16,6 @@ import {
 // Set up Express and its middleware
 export let app = express();
 
-import bugsnag from "@bugsnag/js";
-import bugsnagExpress from "@bugsnag/plugin-express";
-let bugsnagMiddleware: any | null = null;
-if (config.secrets.bugsnag) {
-	const bugsnagClient = bugsnag({
-		apiKey: config.secrets.bugsnag,
-		appVersion: VERSION_NUMBER
-	});
-	bugsnagClient.use(bugsnagExpress);
-	bugsnagMiddleware = bugsnagClient.getPlugin("express");
-	// Must come first to capture errors downstream
-	app.use(bugsnagMiddleware.requestHandler);
-}
-else {
-	console.info("Bugsnag API key not set");
-}
-
 app.use(compression());
 let cookieParserInstance = cookieParser(undefined, COOKIE_OPTIONS as cookieParser.CookieParseOptions);
 app.use(cookieParserInstance);
@@ -100,10 +83,6 @@ app.route("/version").get((request, response) => {
 		"node": process.version
 	});
 });
-
-if (bugsnagMiddleware) {
-	app.use(bugsnagMiddleware.errorHandler);
-}
 
 app.listen(PORT, () => {
 	console.log(`Ground Truth system v${VERSION_NUMBER} @ ${VERSION_HASH} started on port ${PORT}`);
