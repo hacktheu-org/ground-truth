@@ -17,6 +17,7 @@ export let apiRoutes = express.Router();
 apiRoutes.get("/user", passport.authenticate("bearer", { session: false }), async (request, response) => {
 	let user = request.user as IUser;
 	response.json({
+		"id": user.uuid,
 		"uuid": user.uuid,
 		"name": formatName(user),
 		"nameParts": user.name,
