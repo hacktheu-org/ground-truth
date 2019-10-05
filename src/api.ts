@@ -8,7 +8,7 @@ import {
 	IUser, User,
 	IOAuthClient, OAuthClient, AccessToken, Scope, IScope
 } from "./schema";
-import { formatName } from "./common";
+import {formatName, formatUsername} from "./common";
 import { postParser, isAdmin } from "./middleware";
 import { UserSessionData } from "./auth/strategies";
 
@@ -19,6 +19,7 @@ apiRoutes.get("/user", passport.authenticate("bearer", { session: false }), asyn
 	response.json({
 		"id": user.uuid,
 		"uuid": user.uuid,
+        "username": formatUsername(user),
 		"name": formatName(user),
 		"nameParts": user.name,
 		"email": user.email,

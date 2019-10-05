@@ -274,6 +274,23 @@ export function formatName(user: IUser): string {
 	return `${user.name.preferred || user.name.first} ${user.name.last}`;
 }
 
+export function formatUsername(user: IUser): string {
+
+	let hash = 0, i, chr, len;
+	for (i = 0, len = user.uuid.length; i < len; i++) {
+		chr = user.uuid.charCodeAt(i);
+		hash = ((hash << 5) - hash) + chr;
+		hash |= 0; // Convert to 32bit integer
+	}
+
+	let uniqueId = hash.toString();
+	if(uniqueId.length > 5) {
+		uniqueId = uniqueId.substring(0, 5);
+	}
+
+	return `${user.name.preferred || user.name.first}_${user.name.last}_${uniqueId}`;
+}
+
 let renderer = new marked.Renderer();
 let singleLineRenderer = new marked.Renderer();
 singleLineRenderer.link = (href, title, text) => `<a target=\"_blank\" href=\"${href}\" title=\"${title || ''}\">${text}</a>`;
