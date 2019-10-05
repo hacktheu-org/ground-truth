@@ -283,7 +283,7 @@ export function formatUsername(user: IUser): string {
 		hash |= 0; // Convert to 32bit integer
 	}
 
-	let uniqueId = hash.toString();
+	let uniqueId = Math.abs(hash).toString();
 	if(uniqueId.length > 5) {
 		uniqueId = uniqueId.substring(0, 5);
 	}
